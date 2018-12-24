@@ -68,26 +68,23 @@ export default {
     handleClose(key, keyPath) {
       console.log(key, keyPath)
     },
-    logout() {
-      this.$confirm('是否退出?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      })
-        .then(() => {
-          this.$message({
-            type: 'success',
-            message: '退出成功!'
-          })
-          localStorage.removeItem('token111')
-          this.$router.push('./login')
+    async logout() {
+      try {
+        await this.$confirm('是否退出?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
         })
-        .catch(() => {
-          this.$message({
-            type: 'info',
-            message: '取消退出'
-          })
+
+        this.$message({
+          type: 'success',
+          message: '退出成功!'
         })
+        localStorage.removeItem('token111')
+        this.$router.push('./login')
+      } catch (e) {
+        this.$message.info('取消退出了')
+      }
     }
   }
 }
